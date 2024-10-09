@@ -1,0 +1,26 @@
+以ASCII (.ma)格式保存 Maya 场景时出现“文件包含未知节点或数据”疑难解答
+未知节点在尝试以 ASCII 格式保存场景时导致脚本编辑器中显示错误消息 （.MA） 文件格式。在接下来的步骤中，您将找到如何删除这些未知节点的说明。
+
+执行以下脚本以清除场景中的所有未知节点：
+ 
+1. 复制以下代码：
+ 
+{
+    string $unknownNodes[] = `lsType unknown`;
+    for($node in $unknownNodes){
+        if($node=="<done>")
+            break;
+        if(`objExists $node`)
+        {
+            int $lockState[] = `lockNode -q -l $node`;
+            if($lockState[0]==1)
+            lockNode -l off $node;
+            delete $node;
+        }
+    }
+}
+
+2. 在 Maya 中打开 Script Editor。
+3. 将代码粘贴到 MEL 选项卡中。
+4. 按 Enter（键盘）或点击播放按钮以运行脚本。
+5. 尝试将场景保存为 ASCII （.MA） 文件格式。
