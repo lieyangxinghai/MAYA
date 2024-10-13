@@ -1,0 +1,22 @@
+Autodesk,MayaScanner: FileOpenCB :
+Found corrupted scriptlob
+Attempt to fix issue?
+
+以下 mel 代码，拷贝到 maya 的脚本编辑器的 mel 中，最好运行两次　
+
+string $unknownNodes[] = `ls -type "unknown"`;
+
+for($node in $unknownNodes) {
+print( "Deleting " + $node + "\n" );
+lockNode -lock 0 $node;
+delete $node;
+}
+
+string $plugin;
+string $unknownPlugins[] = `unknownPlugin -query -list`;
+for ($plugin in $unknownPlugins)
+{
+unknownPlugin -remove $plugin;
+}
+
+ 
